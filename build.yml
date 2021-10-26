@@ -1,0 +1,66 @@
+trigger:
+  batch: true
+  branches:
+    include:
+      - master
+  paths:
+    include:
+      - src/Puzzel.SmsGateway.Client/*
+
+pool:
+  vmImage: "ubuntu-latest"
+
+variables:
+  projectPath: "src/Puzzel.SmsGateway.Client/Puzzel.SmsGateway.Client.csproj"
+  buildConfiguration: "Release"
+  major: 1
+  minor: 0
+  patch: 0
+  suffix: $[counter(format('{0}.{1}.{2}', variables.major, variables.minor, variables.patch), 1)]
+  previewPadded: $[format('-{0}0{1}', 'preview', variables['suffix'])]
+  previewUnpadded: $[format('-{0}{1}', 'preview', variables['suffix'])]
+  packageVersion: $(major).$(minor).$(patch)$(previewSuffix)
+
+stages:
+  - stage: stage_create_package
+    displayName: Create Nuget package
+    jobs:
+      - job: job_create_package
+        displayName: Create Nuget package
+        variables:
+          suffix: $[counter(format('{0}.{1}.{2}', variables.major, variables.minor, variables.patch), 1)]
+          previewPadded: $[format('-{0}0{1}', 'preview', variables['suffix'])]
+          previewUnpadded: $[format('-{0}{1}', 'preview', variables['suffix'])]
+          packageVersion: $(major).$(minor).$(patch)$(previewSuffix)
+        steps:
+          - script: TMP=$(echo $(previewPadded)) && echo "##vso[task.setvariable variable=previewSuffix]$TMP"
+            displayName: Use padded suffix
+            condition: and(gt(10, variables.suffix), ne(variables['Build.SourceBranchName'], 'master' ))
+          - script: TMP=$(echo $(previewUnpadded)) && echo "##vso[task.setvariable variable=previewSuffix]$TMP"
+            displayName: Use unpadded suffix
+            condition: and(le(10, variables.suffix), ne(variables['Build.SourceBranchName'], 'master' ))
+          - script: echo Version => $(packageVersion)
+            displayName: Show version number
+          - task: DotNetCoreCLI@2
+            displayName: Restore Nuget packages
+            inputs:
+              command: "restore"
+              projects: $(projectPath)
+              feedsToUse: "config"
+              nugetConfigPath: "nuget.config"
+          - task: DotNetCoreCLI@2
+            displayName: Create Nuget package
+            inputs:
+              command: pack
+              configurationToPack: "$(buildConfiguration)"
+              packagesToPack: "$(projectPath)"
+              versioningScheme: byEnvVar
+              versionEnvVar: packageVersion
+          - task: DotNetCoreCLI@2
+            displayName: Push Nuget package
+            inputs:
+              command: push
+              packagesToPush: "$(Build.ArtifactStagingDirectory)/*.nupkg"
+              vstsFeed: "contactcentre"
+              publishVstsFeed: "contactcentre"
+              nobuild: true
