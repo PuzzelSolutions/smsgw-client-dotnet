@@ -19,10 +19,6 @@ variables:
   major: 1
   minor: 0
   patch: 0
-  suffix: $[counter(format('{0}.{1}.{2}', variables.major, variables.minor, variables.patch), 1)]
-  previewPadded: $[format('-{0}0{1}', 'preview', variables['suffix'])]
-  previewUnpadded: $[format('-{0}{1}', 'preview', variables['suffix'])]
-  packageVersion: $(major).$(minor).$(patch)$(previewSuffix)
 
 stages:
   - stage: stage_create_package
@@ -42,6 +38,9 @@ stages:
           - script: TMP=$(echo $(previewUnpadded)) && echo "##vso[task.setvariable variable=previewSuffix]$TMP"
             displayName: Use unpadded suffix
             condition: and(le(10, variables.suffix), ne(variables['Build.SourceBranchName'], 'master' ))
+          - script: TMP=$(echo '') && echo "##vso[task.setvariable variable=previewSuffix]$TMP"
+            displayName: No suffix
+            condition: eq(variables['Build.SourceBranchName'], 'master' )
           - script: echo Version => $(packageVersion)
             displayName: Show version number
           - task: DotNetCoreCLI@2
