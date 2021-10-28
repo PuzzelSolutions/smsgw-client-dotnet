@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+    <PropertyGroup>
+        <TargetFramework>net5.0</TargetFramework>
+        <AssemblyName>Puzzel.SmsGateway.Client.Samples.AspNetCore</AssemblyName>
+        <RootNamespace>Puzzel.SmsGateway.Client.Samples.AspNetCore</RootNamespace>
+        <PackageId>Puzzel.SmsGateway.Client.Samples.AspNetCore</PackageId>
+        <Authors>Puzzel.SmsGateway.Client.Samples.AspNetCore</Authors>
+        <Company>Puzzel.SmsGateway.Client.Samples.AspNetCore</Company>
+        <Product>Puzzel.SmsGateway.Client.Samples.AspNetCore</Product>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.3" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\src\Puzzel.SmsGateway.Client\Puzzel.SmsGateway.Client.csproj" />
+    </ItemGroup>
+
+</Project>

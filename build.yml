@@ -5,12 +5,15 @@ trigger:
       - master
   paths:
     include:
-      - src/Puzzel.SmsGateway.Client/*
+      - src/*
+      - tests/*
+      - Puzzel.SmsGateway.Client.sln
 
 pool:
   vmImage: "ubuntu-latest"
 
 variables:
+  solutionPath: "Puzzel.SmsGateway.Client.sln"
   projectPath: "src/Puzzel.SmsGateway.Client/Puzzel.SmsGateway.Client.csproj"
   buildConfiguration: "Release"
   major: 1
@@ -44,10 +47,15 @@ stages:
           - task: DotNetCoreCLI@2
             displayName: Restore Nuget packages
             inputs:
-              command: "restore"
+              command: restore
               projects: $(projectPath)
               feedsToUse: "config"
               nugetConfigPath: "nuget.config"
+          - task: DotNetCoreCLI@2
+            displayName: Test
+            inputs:
+              command: test
+              projects: $(solutionPath)
           - task: DotNetCoreCLI@2
             displayName: Create Nuget package
             inputs:
