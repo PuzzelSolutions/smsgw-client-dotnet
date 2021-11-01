@@ -3,18 +3,21 @@ trigger:
   branches:
     include:
       - master
+  tags:
+    include:
+      - '*'
   paths:
     include:
       - src/*
       - tests/*
-      - Puzzel.SmsGateway.Client.sln
+      - $(projectName).sln
 
 pool:
   vmImage: "ubuntu-latest"
 
 variables:
-  solutionPath: "Puzzel.SmsGateway.Client.sln"
-  projectPath: "src/Puzzel.SmsGateway.Client/Puzzel.SmsGateway.Client.csproj"
+  solutionPath: "$(projectName).sln"
+  projectPath: "src/$(projectName)/$(projectName).csproj"
   buildConfiguration: "Release"
   major: 1
   minor: 0
@@ -31,18 +34,21 @@ stages:
           previewPadded: $[format('-{0}0{1}', 'preview', variables['suffix'])]
           previewUnpadded: $[format('-{0}{1}', 'preview', variables['suffix'])]
           packageVersion: $(major).$(minor).$(patch)$(previewSuffix)
+          isMain: $[eq(variables['Build.SourceBranch'], 'refs/heads/master')]
+          isTag: $[startsWith(variables['Build.SourceBranch'], 'refs/tags/')]
         steps:
           - script: TMP=$(echo $(previewPadded)) && echo "##vso[task.setvariable variable=previewSuffix]$TMP"
             displayName: Use padded suffix
-            condition: and(gt(10, variables.suffix), ne(variables['Build.SourceBranchName'], 'master' ))
+            condition: and(gt(10, variables.suffix), eq(variables.isMain, false))
           - script: TMP=$(echo $(previewUnpadded)) && echo "##vso[task.setvariable variable=previewSuffix]$TMP"
             displayName: Use unpadded suffix
-            condition: and(le(10, variables.suffix), ne(variables['Build.SourceBranchName'], 'master' ))
+            condition: and(le(10, variables.suffix), eq(variables.isMain, false))
           - script: TMP=$(echo '') && echo "##vso[task.setvariable variable=previewSuffix]$TMP"
             displayName: No suffix
-            condition: eq(variables['Build.SourceBranchName'], 'master' )
+            condition: or(eq(variables.isTag, true), eq(variables.isMain, true))
           - script: echo Version => $(packageVersion)
             displayName: Show version number
+            condition: or(eq(variables.isTag, true), eq(variables.isMain, false))
           - task: DotNetCoreCLI@2
             displayName: Restore Nuget packages
             inputs:
@@ -63,6 +69,7 @@ stages:
               packagesToPack: "$(projectPath)"
               versioningScheme: byEnvVar
               versionEnvVar: packageVersion
+            condition: or(eq(variables.isTag, true), eq(variables.isMain, false))
           - task: DotNetCoreCLI@2
             displayName: Push Nuget package
             inputs:
@@ -71,3 +78,4 @@ stages:
               vstsFeed: "contactcentre"
               publishVstsFeed: "contactcentre"
               nobuild: true
+            condition: or(eq(variables.isTag, true), eq(variables.isMain, false))
