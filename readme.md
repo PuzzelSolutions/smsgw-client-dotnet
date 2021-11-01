@@ -4,7 +4,7 @@
 - Strong-named
 
 ## NuGet package ##
- 
+[![NuGet](https://img.shields.io/nuget/v/Puzzel.SmsGateway.Client.svg?maxAge=2592000)](https://www.nuget.org/packages/Puzzel.SmsGateway.Client/)<br/><br/> 
 ```
 dotnet add package Puzzel.SmsGateway.Client
 ```
