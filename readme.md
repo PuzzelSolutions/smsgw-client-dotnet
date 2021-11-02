@@ -11,4 +11,4 @@ dotnet add package Puzzel.SmsGateway.Client
 
 ## Example usage ##
 
-Samples projects are available in the `samples` folder.
+Sample projects are available in the `samples` folder.
