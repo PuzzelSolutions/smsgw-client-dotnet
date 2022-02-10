@@ -47,8 +47,8 @@ namespace Puzzel.SmsGateway.Client
         /// <inheritdoc />
         public async Task<SmsGatewayResponse> SendAsync(SmsGatewayCredentials credentials, IEnumerable<Message> messages)
         {
-            var requestMessage = CreateRequestMessage(credentials, messages);
-            var responseMessage = await _httpClient.SendAsync(requestMessage).ConfigureAwait(false);
+            using var requestMessage = CreateRequestMessage(credentials, messages);
+            using var responseMessage = await _httpClient.SendAsync(requestMessage).ConfigureAwait(false);
             if (!responseMessage.IsSuccessStatusCode)
             {
                 throw new SmsGatewayException("SMS gateway error", responseMessage.StatusCode, responseMessage.ReasonPhrase);
@@ -79,7 +79,7 @@ namespace Puzzel.SmsGateway.Client
 
         private async Task<SmsGatewayResponse> CreateResponseAsync(HttpResponseMessage responseMessage)
         {
-            var responseContentStream = await responseMessage.Content.ReadAsStreamAsync().ConfigureAwait(false);
+            using var responseContentStream = await responseMessage.Content.ReadAsStreamAsync().ConfigureAwait(false);
             var response = await JsonSerializer.DeserializeAsync<SmsGatewayResponse>(responseContentStream, _serializerOptions).ConfigureAwait(false);
 
             return response;
