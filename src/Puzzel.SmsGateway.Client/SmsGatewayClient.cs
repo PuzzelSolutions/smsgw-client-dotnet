@@ -39,13 +39,13 @@ namespace Puzzel.SmsGateway.Client
         }
 
         /// <inheritdoc />
-        public async Task<SmsGatewayResponse> SendAsync(SmsGatewayCredentials credentials, Message message)
+        public async Task<SmsGatewayResponse?> SendAsync(SmsGatewayCredentials credentials, Message message)
         {
             return await SendAsync(credentials, new[] { message }).ConfigureAwait(false);
         }
 
         /// <inheritdoc />
-        public async Task<SmsGatewayResponse> SendAsync(SmsGatewayCredentials credentials, IEnumerable<Message> messages)
+        public async Task<SmsGatewayResponse?> SendAsync(SmsGatewayCredentials credentials, IEnumerable<Message> messages)
         {
             using var requestMessage = CreateRequestMessage(credentials, messages);
             using var responseMessage = await _httpClient.SendAsync(requestMessage).ConfigureAwait(false);
@@ -77,7 +77,7 @@ namespace Puzzel.SmsGateway.Client
             return requestMessage;
         }
 
-        private async Task<SmsGatewayResponse> CreateResponseAsync(HttpResponseMessage responseMessage)
+        private async Task<SmsGatewayResponse?> CreateResponseAsync(HttpResponseMessage responseMessage)
         {
             using var responseContentStream = await responseMessage.Content.ReadAsStreamAsync().ConfigureAwait(false);
             var response = await JsonSerializer.DeserializeAsync<SmsGatewayResponse>(responseContentStream, _serializerOptions).ConfigureAwait(false);

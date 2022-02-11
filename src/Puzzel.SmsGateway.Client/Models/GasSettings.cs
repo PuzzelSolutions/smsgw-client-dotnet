@@ -34,7 +34,7 @@ namespace Puzzel.SmsGateway.Client.Models
         /// Gets further details for the category of Goods and services.
         /// The description may occur on the end-user invoice(together with category) for certain Mobile Network Operators.
         /// </summary>
-        public string Description { get; }
+        public string? Description { get; }
 
         /// <summary>
         /// Returns a string that represents the current object.

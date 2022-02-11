@@ -8,6 +8,7 @@
         <Company>Puzzel AS</Company>
         <PackageTags>Puzzel;sms</PackageTags>
         <Description>Puzzel SMS Gateway Client Library</Description>
+        <Nullable>enable</Nullable>
     </PropertyGroup>
 
     <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">

@@ -11,12 +11,12 @@ namespace Puzzel.SmsGateway.Client.Models
         /// <summary>
         /// Gets or sets the unique system generated reference to the batch.
         /// </summary>
-        public string BatchReference { get; set; }
+        public string? BatchReference { get; set; }
 
         /// <summary>
         /// Gets or sets the status of each message sent to the gateway.
         /// </summary>
-        public List<MessageStatus> MessageStatus { get; set; }
+        public List<MessageStatus>? MessageStatus { get; set; }
 
         /// <summary>
         /// Returns a string that represents the current object.
@@ -25,6 +25,6 @@ namespace Puzzel.SmsGateway.Client.Models
         /// A string that represents the current object.
         /// </returns>
         public override string ToString() =>
-            $"{nameof(BatchReference)}: {BatchReference}, {nameof(MessageStatus)}: {MessageStatus.Dump()}";
+            $"{nameof(BatchReference)}: {BatchReference}, {nameof(MessageStatus)}: {MessageStatus?.Dump()}";
     }
 }

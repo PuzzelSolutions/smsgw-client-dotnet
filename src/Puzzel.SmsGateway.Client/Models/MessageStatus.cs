@@ -15,12 +15,12 @@ namespace Puzzel.SmsGateway.Client.Models
         /// <summary>
         /// Gets or sets a textual information about status, e.g. which parameter failed.
         /// </summary>
-        public string StatusMessage { get; set; }
+        public string? StatusMessage { get; set; }
 
         /// <summary>
         /// Gets or sets the client reference ID, if specified in the request.
         /// </summary>
-        public string ClientReference { get; set; }
+        public string? ClientReference { get; set; }
 
         /// <summary>
         /// Gets or sets the recipient.
@@ -29,17 +29,17 @@ namespace Puzzel.SmsGateway.Client.Models
         /// i.e. “+47 41 00 00 00” will be “+4741000000” in the response.
         /// Use the ClientReference if you need to match messages in the request and response.
         /// </summary>
-        public string Recipient { get; set; }
+        public string? Recipient { get; set; }
 
         /// <summary>
         /// Gets or sets the message ID (used as reference for delivery reports).
         /// </summary>
-        public string MessageId { get; set; }
+        public string? MessageId { get; set; }
 
         /// <summary>
         /// Gets or sets the session ID for a session. Only returned if NewSession parameter is set to true, or if you are specifying a session ID.
         /// </summary>
-        public string SessionId { get; set; }
+        public string? SessionId { get; set; }
 
         /// <summary>
         /// Gets or sets the sequence index.

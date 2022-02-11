@@ -20,8 +20,8 @@ namespace Puzzel.SmsGateway.Client.Models
             string recipient,
             string content,
             uint price = 0,
-            string clientReference = null,
-            Settings settings = null)
+            string? clientReference = null,
+            Settings? settings = null)
         {
             if (string.IsNullOrEmpty(recipient))
             {
@@ -58,12 +58,12 @@ namespace Puzzel.SmsGateway.Client.Models
         /// <summary>
         /// Gets an arbitrary client reference ID that will be returned in the message response.
         /// </summary>
-        public string ClientReference { get; }
+        public string? ClientReference { get; }
 
         /// <summary>
         /// Gets the advanced message settings.
         /// </summary>
-        public Settings Settings { get; }
+        public Settings? Settings { get; }
 
         /// <inheritdoc />
         public override string ToString()

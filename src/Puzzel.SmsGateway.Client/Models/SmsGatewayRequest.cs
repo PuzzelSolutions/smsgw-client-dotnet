@@ -17,23 +17,23 @@ namespace Puzzel.SmsGateway.Client.Models
         /// <summary>
         /// Gets or sets the username. Provided by Puzzel service desk.
         /// </summary>
-        public string Username { get; set; }
+        public string? Username { get; set; }
 
         /// <summary>
         /// Gets or sets the password. Provided by Puzzel service desk.
         /// </summary>
-        public string Password { get; set; }
+        public string? Password { get; set; }
 
         /// <summary>
         /// Gets or sets the reference ID that will be returned in the response.
         /// </summary>
-        public string BatchReference { get; set; }
+        public string? BatchReference { get; set; }
 
         /// <summary>
         /// Gets or sets the message(s) that will be sent to the gateway.
         /// </summary>
         [JsonPropertyName("message")]
-        public IEnumerable<Message> Messages { get; set; }
+        public IEnumerable<Message>? Messages { get; set; }
 
         /// <summary>
         /// Returns a string that represents the current object.
@@ -42,6 +42,6 @@ namespace Puzzel.SmsGateway.Client.Models
         /// A string that represents the current object.
         /// </returns>
         public override string ToString() =>
-            $"{nameof(ServiceId)}: {ServiceId}, {nameof(Username)}: {Username}, {nameof(Password)}: {Password}, {nameof(BatchReference)}: {BatchReference}, {nameof(Messages)}: {Messages.Dump()}";
+            $"{nameof(ServiceId)}: {ServiceId}, {nameof(Username)}: {Username}, {nameof(Password)}: {Password}, {nameof(BatchReference)}: {BatchReference}, {nameof(Messages)}: {Messages?.Dump()}";
     }
 }

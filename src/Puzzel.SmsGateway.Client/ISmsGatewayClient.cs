@@ -18,7 +18,7 @@ namespace Puzzel.SmsGateway.Client
         /// <param name="credentials">SMS gateway service credentials.</param>
         /// <param name="message">The message to send.</param>
         /// <returns>Gateway response.</returns>
-        Task<SmsGatewayResponse> SendAsync(SmsGatewayCredentials credentials, Message message);
+        Task<SmsGatewayResponse?> SendAsync(SmsGatewayCredentials credentials, Message message);
 
         /// <summary>
         /// Send one or more messages to the gateway.
@@ -26,6 +26,6 @@ namespace Puzzel.SmsGateway.Client
         /// <param name="credentials">SMS gateway service credentials.</param>
         /// <param name="messages">The message(s) to send.</param>
         /// <returns>Gateway response.</returns>
-        Task<SmsGatewayResponse> SendAsync(SmsGatewayCredentials credentials, IEnumerable<Message> messages);
+        Task<SmsGatewayResponse?> SendAsync(SmsGatewayCredentials credentials, IEnumerable<Message> messages);
     }
 }

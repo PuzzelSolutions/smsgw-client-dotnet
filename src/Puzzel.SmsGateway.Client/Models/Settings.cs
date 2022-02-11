@@ -28,7 +28,7 @@ namespace Puzzel.SmsGateway.Client.Models
         /// <summary>
         /// Gets or sets an arbitrary string set by the client to enable grouping messages in certain statistic reports.
         /// </summary>
-        public string Differentiator { get; set; }
+        public string? Differentiator { get; set; }
 
         /// <summary>
         /// Gets or sets an age limit for message content.
@@ -47,12 +47,12 @@ namespace Puzzel.SmsGateway.Client.Models
         /// <summary>
         /// Gets or sets a session ID which is used to continue an existing session.
         /// </summary>
-        public string SessionId { get; set; }
+        public string? SessionId { get; set; }
 
         /// <summary>
         /// Gets or sets an arbitrary string which is used to enable grouping messages on the service invoice.
         /// </summary>
-        public string InvoiceNode { get; set; }
+        public string? InvoiceNode { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether to auto detect message content encoding or not.
@@ -67,27 +67,27 @@ namespace Puzzel.SmsGateway.Client.Models
         /// Gets or sets originator settings.
         /// Uses service value unless specified.
         /// </summary>
-        public OriginatorSettings OriginatorSettings { get; set; }
+        public OriginatorSettings? OriginatorSettings { get; set; }
 
         /// <summary>
         /// Gets or sets GAS settings.
         /// Uses service value unless specified.
         /// Used if the message is a CPA Goods and Services transaction.
         /// </summary>
-        public GasSettings GasSettings { get; set; }
+        public GasSettings? GasSettings { get; set; }
 
         /// <summary>
         /// Gets or sets the send window.
         /// Used if the message should be queued and sent in the future instead of immediately.
         /// </summary>
-        public SendWindow SendWindow { get; set; }
+        public SendWindow? SendWindow { get; set; }
 
         /// <summary>
         /// Gets or sets specify special settings including settings for binary message.
         /// Available parameter keys: <see cref="Constants.ParameterKey"/>.
         /// </summary>
         [JsonPropertyName("parameter")]
-        public IEnumerable<Parameter> Parameters { get; set; }
+        public IEnumerable<Parameter>? Parameters { get; set; }
 
         /// <summary>
         /// Returns a string that represents the current object.
@@ -96,6 +96,6 @@ namespace Puzzel.SmsGateway.Client.Models
         /// A string that represents the current object.
         /// </returns>
         public override string ToString() =>
-            $"{nameof(Priority)}: {Priority}, {nameof(Validity)}: {Validity}, {nameof(Differentiator)}: {Differentiator}, {nameof(Age)}: {Age}, {nameof(NewSession)}: {NewSession}, {nameof(SessionId)}: {SessionId}, {nameof(InvoiceNode)}: {InvoiceNode}, {nameof(AutoDetectEncoding)}: {AutoDetectEncoding}, {nameof(OriginatorSettings)}: {OriginatorSettings}, {nameof(GasSettings)}: {GasSettings}, {nameof(SendWindow)}: {SendWindow}, {nameof(Parameters)}: {Parameters.Dump()}";
+            $"{nameof(Priority)}: {Priority}, {nameof(Validity)}: {Validity}, {nameof(Differentiator)}: {Differentiator}, {nameof(Age)}: {Age}, {nameof(NewSession)}: {NewSession}, {nameof(SessionId)}: {SessionId}, {nameof(InvoiceNode)}: {InvoiceNode}, {nameof(AutoDetectEncoding)}: {AutoDetectEncoding}, {nameof(OriginatorSettings)}: {OriginatorSettings}, {nameof(GasSettings)}: {GasSettings}, {nameof(SendWindow)}: {SendWindow}, {nameof(Parameters)}: {Parameters?.Dump()}";
     }
 }

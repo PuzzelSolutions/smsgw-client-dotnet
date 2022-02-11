@@ -51,12 +51,12 @@ namespace Puzzel.SmsGateway.Client
         /// <summary>
         /// Gets or sets the username. Provided by Puzzel service desk.
         /// </summary>
-        public string Username { get; set; }
+        public string? Username { get; set; }
 
         /// <summary>
         /// Gets or sets the password. Provided by Puzzel service desk.
         /// </summary>
-        public string Password { get; set; }
+        public string? Password { get; set; }
 
         /// <summary>
         /// Returns a string that represents the current object.
