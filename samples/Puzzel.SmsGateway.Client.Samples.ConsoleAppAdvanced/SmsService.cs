@@ -52,7 +52,7 @@ namespace Puzzel.SmsGateway.Client.Samples.ConsoleAppAdvanced
                 //     new("+4712345678", "This is a test")
                 // };
 
-                var response = await _client.SendAsync(_credentials, message);
+                var response = await _client.SendAsync(_credentials, message, stoppingToken);
                 _logger.LogInformation("SMS gateway response: {Response}", response);
             }
             catch (SmsGatewayException e)

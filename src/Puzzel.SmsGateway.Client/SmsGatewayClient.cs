@@ -4,6 +4,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Text.Json;
+using System.Threading;
 using System.Threading.Tasks;
 using Puzzel.SmsGateway.Client.Exceptions;
 using Puzzel.SmsGateway.Client.Models;
@@ -39,16 +40,16 @@ namespace Puzzel.SmsGateway.Client
         }
 
         /// <inheritdoc />
-        public async Task<SmsGatewayResponse?> SendAsync(SmsGatewayCredentials credentials, Message message)
+        public async Task<SmsGatewayResponse?> SendAsync(SmsGatewayCredentials credentials, Message message, CancellationToken cancellationToken = default)
         {
-            return await SendAsync(credentials, new[] { message }).ConfigureAwait(false);
+            return await SendAsync(credentials, new[] { message }, cancellationToken).ConfigureAwait(false);
         }
 
         /// <inheritdoc />
-        public async Task<SmsGatewayResponse?> SendAsync(SmsGatewayCredentials credentials, IEnumerable<Message> messages)
+        public async Task<SmsGatewayResponse?> SendAsync(SmsGatewayCredentials credentials, IEnumerable<Message> messages, CancellationToken cancellationToken = default)
         {
             using var requestMessage = CreateRequestMessage(credentials, messages);
-            using var responseMessage = await _httpClient.SendAsync(requestMessage).ConfigureAwait(false);
+            using var responseMessage = await _httpClient.SendAsync(requestMessage, cancellationToken).ConfigureAwait(false);
             if (!responseMessage.IsSuccessStatusCode)
             {
                 throw new SmsGatewayException("SMS gateway error", responseMessage.StatusCode, responseMessage.ReasonPhrase);
