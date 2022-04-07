@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace Puzzel.SmsGateway.Client.Extensions
 {
-    internal static class EnumerableExtensions
+    public static class EnumerableExtensions
     {
         public static string Dump<T>(this IEnumerable<T> enumerable)
         {

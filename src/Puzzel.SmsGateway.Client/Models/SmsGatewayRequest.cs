@@ -7,7 +7,7 @@ namespace Puzzel.SmsGateway.Client.Models
     /// <summary>
     /// Gateway request.
     /// </summary>
-    internal class SmsGatewayRequest
+    public class SmsGatewayRequest
     {
         /// <summary>
         /// Gets or sets the service ID. Provided by Puzzel service desk.
